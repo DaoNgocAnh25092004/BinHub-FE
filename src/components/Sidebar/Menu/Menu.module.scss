@@ -5,11 +5,12 @@
   padding: 12px 20px;
   font-size: 16px;
   font-weight: 500;
-  color: #838383;
+  opacity: 0.4;
   line-height: 15px;
   cursor: pointer;
   position: relative;
   transition: all 0.3s linear;
+  color: var(--white-color);
 
   &:hover,
   &.active {
@@ -21,8 +22,7 @@
       background: var(--blue-light-color);
       left: 0;
     }
-    color: var(--white-color);
-    background: #121212;
+    opacity: 1;
   }
 }
 

@@ -1,26 +1,4 @@
-.header {
-  height: var(--header-height);
-  background-color: var(--background-color);
-  border-bottom: 2px solid var(--gray-medium-color);
-  position: fixed;
-  top: 0;
-  left: var(--sidebar-width);
-  right: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-}
-
-.user-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-}
-
-.notify {
+.dark-mode-toggle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,13 +7,16 @@
   border: none;
   border-radius: 50%;
   background-color: transparent;
+  color: var(--white-color);
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  //   overflow: hidden;
 
   svg {
-    color: var(--white-color);
-    font-size: 16px;
+    font-size: 20px;
     transition: transform 0.3s ease;
+    color: var(--white-color);
   }
 
   &:hover {
@@ -44,6 +25,13 @@
 
   &:active {
     transform: scale(0.95);
+  }
+
+  // Animation khi chuyển đổi
+  &.active {
+    svg {
+      transform: rotate(180deg);
+    }
   }
 
   // Hiệu ứng glow cho dark mode
@@ -64,11 +52,14 @@
   }
 }
 
-.avatar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  img {
-    border-radius: 100rem;
+// Responsive
+@media screen and (max-width: 768px) {
+  .dark-mode-toggle {
+    width: 36px;
+    height: 36px;
+
+    svg {
+      font-size: 18px;
+    }
   }
 }

@@ -7,14 +7,12 @@
   margin-left: var(--sidebar-width);
   margin-top: var(--header-height);
   min-height: calc(100vh - var(--header-height));
-  background-color: var(--gray-dark-color);
+  background-color: var(--background-color);
 }
 
 .content {
-  padding: var(--spacing-lr-content);
-  max-width: 1200px;
-  margin: 0 auto;
   color: var(--white-color);
+  padding: var(--spacing-content);
   min-height: calc(100vh - var(--header-height));
 }
 
