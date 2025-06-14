@@ -1,19 +1,17 @@
 .layout {
-  min-height: 100vh;
+  min-height: calc(100vh - var(--header-height));
   background-color: var(--background-color);
 }
 
 .main {
   margin-left: var(--sidebar-width);
   margin-top: var(--header-height);
-  min-height: calc(100vh - var(--header-height));
   background-color: var(--background-color);
 }
 
 .content {
   color: var(--white-color);
   padding: var(--spacing-content);
-  min-height: calc(100vh - var(--header-height));
 }
 
 @media screen and (max-width: 768px) {

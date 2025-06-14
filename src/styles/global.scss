@@ -28,7 +28,7 @@
 
   /* Sắc thái xám */
   --gray-light-color: #8e8e8e;
-  --gray-medium-color: rgba(255, 255, 255, 0.2);
+  --gray-medium-color: rgba(255, 255, 255, 0.1);
   --gray-dark-color: rgb(19, 18, 19);
   --border-color: rgba(255, 255, 255, 0.1);
 
@@ -114,6 +114,31 @@ input,
 a {
   text-decoration: none;
   color: var(--black-color);
+}
+
+//Fonts chữ
+@font-face {
+  font-family: ProximaNova;
+  src: url("/fonts/TikTokFont-Regular.woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: ProximaNova;
+  src: url("/fonts/TikTokFont-Semibold.woff2");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: ProximaNova;
+  src: url("/fonts/TikTokDisplayFont-Bold.woff2");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: SofiaPro;
+  src: url("/fonts/TikTokFont-Bold.woff2");
+  font-weight: 700;
 }
 
 //Custom tippy tooltip
