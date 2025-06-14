@@ -16,10 +16,10 @@ function Sidebar() {
       </Link>
 
       <Menu>
-        <MenuItem title="Dashboard" to="/" icon={<MdHome />} />
+        <MenuItem title="Trang chủ" to="/" icon={<MdHome />} />
 
         <MenuItem
-          title="Study Management"
+          title="Quản lý học tập"
           to="/study-management"
           icon={<IoLibrary />}
         />

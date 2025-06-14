@@ -8,11 +8,7 @@ const cx = classNames.bind(styles);
 function Search() {
   return (
     <div className={cx("search")}>
-      <input
-        className={cx("input")}
-        type="text"
-        placeholder="Tìm kiếm bài hát..."
-      />
+      <input className={cx("input")} type="text" placeholder="Tìm kiếm..." />
       <FaSearch className={cx("icon-search")} />
     </div>
   );
