@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "../styles/global.scss";
-import styles from "../styles/Layout.module.scss";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
+import LayoutClient from "../components/LayoutClient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bin Hub - Ứng dụng âm nhạc",
-  description: "Khám phá, nghe và quản lý âm nhạc yêu thích của bạn",
+  title: "Bin Hub - Ứng dụng quản lý cá nhân",
+  description:
+    "Khám phá các tính năng quản lý cá nhân hiệu quả, đơn giản và thông minh cùng Bin Hub.",
 };
 
 export default function RootLayout({
@@ -49,13 +48,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable}`}
         suppressHydrationWarning
       >
-        <div className={styles.layout}>
-          <Header />
-          <Sidebar />
-          <main className={styles.main}>
-            <div className={styles.content}>{children}</div>
-          </main>
-        </div>
+        <LayoutClient>{children}</LayoutClient>
       </body>
     </html>
   );

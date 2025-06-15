@@ -1,0 +1,316 @@
+// ===== RESPONSIVE UTILITIES =====
+// Mixins và utilities cho responsive design
+
+// Breakpoints
+$breakpoints: (
+  // Breakpoint definitions for responsive design:
+  // "xs":  0      - Extra small devices (portrait phones)
+  // "sm":  480px  - Small devices (landscape phones)
+  // "md":  768px  - Medium devices (tablets)
+  // "lg":  1024px - Large devices (desktops)
+  // "xl":  1200px - Extra large devices (large desktops)
+  // "xxl": 1400px - Extra extra large devices (larger screens)
+  "xs": 0,
+  "sm": 480px,
+  "md": 768px,
+  "lg": 1024px,
+  "xl": 1200px,
+  "xxl": 1400px
+);
+
+// Media query mixins
+// @include respond-to(md) {
+//   font-size: 16px;  // Áp dụng từ 768px trở lên
+// }
+
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media screen and (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+//  @include respond-below(tablet) {
+//     display: block;  // Áp dụng dưới 768px (0px - 767px)
+//  }
+@mixin respond-below($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media screen and (max-width: #{map-get($breakpoints, $breakpoint) - 1px}) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+//  @include respond-between(tablet, desktop) {
+//     display: block;  // Chỉ hiển thị từ 768px đến 1023px
+//   }
+@mixin respond-between($min, $max) {
+  @if map-has-key($breakpoints, $min) and map-has-key($breakpoints, $max) {
+    @media screen and (min-width: #{map-get($breakpoints, $min)}) and (max-width: #{map-get($breakpoints, $max) - 1px}) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoints: #{$min} or #{$max}";
+  }
+}
+
+// Responsive font sizes
+// @include fluid-font(18px, 48px);
+// Custom:  @include fluid-font(14px, 24px, 480px, 1440px);
+@mixin fluid-font($min-size, $max-size, $min-width: 320px, $max-width: 1200px) {
+  font-size: $min-size;
+
+  @media screen and (min-width: $min-width) {
+    font-size: calc(
+      #{$min-size} + (#{strip-unit($max-size)} - #{strip-unit($min-size)}) * ((
+              100vw - #{$min-width}
+            ) / (#{strip-unit($max-width)} - #{strip-unit($min-width)}))
+    );
+  }
+
+  @media screen and (min-width: $max-width) {
+    font-size: $max-size;
+  }
+}
+
+// Helper function to strip units
+// strip-unit(48px)    // → 48
+// strip-unit(0px)     // → 0
+// strip-unit(-20px)   // → -20
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
+
+// Responsive spacing utilities
+// //Chỉ mobile
+// .card {
+//   @include responsive-padding(1rem);
+// }
+
+// // Mobile + Tablet
+// .section {
+//   @include responsive-padding(1rem, 2rem);
+// }
+
+// // Mobile + Tablet + Desktop
+// .container {
+//   @include responsive-padding(1rem, 2rem, 3rem);
+// }
+@mixin responsive-padding($mobile, $tablet: null, $desktop: null) {
+  padding: $mobile;
+
+  @if $tablet {
+    @include respond-to("md") {
+      padding: $tablet;
+    }
+  }
+
+  @if $desktop {
+    @include respond-to("lg") {
+      padding: $desktop;
+    }
+  }
+}
+
+@mixin responsive-margin($mobile, $tablet: null, $desktop: null) {
+  margin: $mobile;
+
+  @if $tablet {
+    @include respond-to("md") {
+      margin: $tablet;
+    }
+  }
+
+  @if $desktop {
+    @include respond-to("lg") {
+      margin: $desktop;
+    }
+  }
+}
+
+// Grid utilities
+// Sử dụng default values
+// .grid-container {
+//   @include responsive-grid();
+//   // Mobile: 1 cột, Tablet: 2 cột, Desktop: 4 cột
+// }
+
+// // Custom values
+// .product-grid {
+//   @include responsive-grid(1, 3, 6);
+//   // Mobile: 1 cột, Tablet: 3 cột, Desktop: 6 cột
+// }
+
+// // Partial custom
+// .blog-grid {
+//   @include responsive-grid(1, 2);
+//   // Mobile: 1 cột, Tablet: 2 cột, Desktop: 4 cột (default)
+// }
+@mixin responsive-grid($mobile-cols: 1, $tablet-cols: 2, $desktop-cols: 4) {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat($mobile-cols, 1fr);
+
+  @include respond-to("md") {
+    grid-template-columns: repeat($tablet-cols, 1fr);
+  }
+
+  @include respond-to("lg") {
+    grid-template-columns: repeat($desktop-cols, 1fr);
+  }
+}
+
+// Container utilities
+// @mixin container($max-width: 1200px) {
+//   width: 100%;
+//   max-width: $max-width;
+//   margin: 0 auto;
+//   padding: 0 1rem;
+
+//   @include respond-to("md") {
+//     padding: 0 2rem;
+//   }
+
+//   @include respond-to("lg") {
+//     padding: 0 3rem;
+//   }
+// }
+@mixin container($max-width: 1200px) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @include respond-to("md") {
+    padding: 0 2rem;
+  }
+
+  @include respond-to("lg") {
+    padding: 0 3rem;
+  }
+}
+
+// Responsive show/hide utilities
+//  .hero-title-mobile {
+//     @extend .show-mobile;
+//   }
+
+//   .hero-title-desktop {
+//     @extend .show-desktop;
+//   }
+.show-mobile {
+  display: block;
+
+  @include respond-to("md") {
+    display: none;
+  }
+}
+
+.show-tablet {
+  display: none;
+
+  @include respond-between("md", "lg") {
+    display: block;
+  }
+}
+
+.show-desktop {
+  display: none;
+
+  @include respond-to("lg") {
+    display: block;
+  }
+}
+
+.hide-mobile {
+  display: none;
+
+  @include respond-to("md") {
+    display: block;
+  }
+}
+
+.hide-tablet {
+  display: block;
+
+  @include respond-between("md", "lg") {
+    display: none;
+  }
+}
+
+.hide-desktop {
+  display: block;
+
+  @include respond-to("lg") {
+    display: none;
+  }
+}
+
+// Responsive text utilities
+// h1 {
+//   @extend .text-responsive-large;
+// }
+.text-responsive {
+  @include fluid-font(1.4rem, 2.4rem);
+}
+
+.text-responsive-small {
+  @include fluid-font(1.2rem, 1.8rem);
+}
+
+.text-responsive-large {
+  @include fluid-font(1.8rem, 3.2rem);
+}
+
+// Touch-friendly utilities
+// "Tất cả button phải cao ít nhất 44px"
+// "Tất cả button phải rộng ít nhất 44px"
+// Đảm bảo dễ chạm trên mobile
+// Tất cả button
+// .btn {
+//   @include touch-target();  // Tự động 44px
+//   background: blue;
+//   color: white;
+//   border: none;
+// }
+
+@mixin touch-target($size: 44px) {
+  min-height: $size;
+  min-width: $size;
+
+  @include respond-below("md") {
+    min-height: $size;
+    min-width: $size;
+  }
+}
+
+// Responsive animations
+// Desktop: Hover bình thường
+// Mobile: Active state (chỉ khi đang chạm)
+// UX tốt!
+//  @include responsive-hover {
+//     transform: scale(1.1);     // Phóng to 1.1 lần
+//     background: darkblue;      // Đổi màu
+//   }
+@mixin responsive-hover {
+  transition: all 0.3s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}

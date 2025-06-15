@@ -8,23 +8,38 @@ import Menu, { MenuItem } from "./Menu";
 
 const cx = classNames.bind(styles);
 
-function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   return (
-    <aside className={cx("sidebar")}>
-      <Link href="/">
-        <div className={cx("logo")}>Bin Hub</div>
-      </Link>
+    <>
+      <aside className={cx("sidebar", { open: isOpen })}>
+        <Link href="/">
+          <div className={cx("logo")}>Bin Hub</div>
+        </Link>
 
-      <Menu>
-        <MenuItem title="Trang chủ" to="/" icon={<MdHome />} />
+        <Menu>
+          <MenuItem title="Trang chủ" to="/" icon={<MdHome />} />
 
-        <MenuItem
-          title="Quản lý học tập"
-          to="/study-management"
-          icon={<IoLibrary />}
+          <MenuItem
+            title="Quản lý học tập"
+            to="/study-management"
+            icon={<IoLibrary />}
+          />
+        </Menu>
+      </aside>
+
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className={cx("sidebarOverlay", { open: isOpen })}
+          onClick={onClose}
         />
-      </Menu>
-    </aside>
+      )}
+    </>
   );
 }
 

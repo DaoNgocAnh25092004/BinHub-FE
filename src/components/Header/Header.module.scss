@@ -10,22 +10,77 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 var(--spacing-content);
+  transition: all 0.3s ease;
+
+  // Tablet responsive
+  @media screen and (max-width: 1024px) {
+    left: var(--sidebar-width-tablet, var(--sidebar-width));
+    padding: 0 2rem;
+  }
+
+  // Mobile responsive - keep flexbox layout
+  @media screen and (max-width: 768px) {
+    left: 0;
+    padding: 0 1.6rem;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  @media screen and (max-width: 480px) {
+    padding: 0 1.2rem;
+    gap: 0.8rem;
+  }
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @media screen and (max-width: 480px) {
+    gap: 0.8rem;
+  }
 }
 
 .user-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 2rem;
+  margin-left: auto;
+
+  // Tablet responsive
+  @media screen and (max-width: 1024px) {
+    gap: 1.6rem;
+  }
+
+  // Mobile responsive - reduce gap and hide some elements
+  @media screen and (max-width: 768px) {
+    gap: 1.2rem;
+    margin-left: auto;
+  }
+
+  @media screen and (max-width: 480px) {
+    gap: 0.8rem;
+
+    // Hide notification on very small screens
+    .notify {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    gap: 0.6rem;
+  }
 }
 
 .notify {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 4rem;
+  height: 4rem;
   border: none;
   border-radius: 50%;
   background-color: transparent;
@@ -34,7 +89,7 @@
 
   svg {
     color: var(--white-color);
-    font-size: 16px;
+    font-size: 1.6rem;
     transition: transform 0.3s ease;
   }
 
@@ -44,6 +99,25 @@
 
   &:active {
     transform: scale(0.95);
+  }
+
+  // Mobile touch-friendly sizing
+  @media screen and (max-width: 768px) {
+    width: 4.4rem;
+    height: 4.4rem;
+
+    svg {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 4rem;
+    height: 4rem;
+
+    svg {
+      font-size: 1.6rem;
+    }
   }
 
   // Hiệu ứng glow cho dark mode
@@ -68,7 +142,241 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   img {
     border-radius: 100rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    transition: transform 0.3s ease;
+
+    // Mobile responsive
+    @media screen and (max-width: 768px) {
+      width: 3.6rem;
+      height: 3.6rem;
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
+}
+
+.mobile-menu-toggle {
+  display: none;
+  width: 4.4rem;
+  height: 4.4rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: var(--gray-medium-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  svg {
+    font-size: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    background-color: var(--blue-light-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 106, 255, 0.3);
+
+    svg {
+      transform: scale(1.1);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.95);
+  }
+
+  // Ripple effect
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+  }
+  &:active::before {
+    width: 100%;
+    height: 100%;
+  }
+
+  // Show only on mobile
+  @media screen and (max-width: 768px) {
+    display: flex;
+  }
+}
+
+// Logo styles
+.logo {
+  display: none; // Hidden on desktop (logo in sidebar)
+  text-decoration: none;
+  color: var(--text-color);
+  font-family: cursive;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--blue-light-color);
+    transform: scale(1.05);
+  }
+
+  // Show logo on mobile when sidebar is hidden
+  @media screen and (max-width: 768px) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.logo-text {
+  background: linear-gradient(
+    135deg,
+    var(--blue-light-color),
+    var(--turquoise-color)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Search wrapper for responsive behavior
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto;
+  flex: 1;
+
+  @media screen and (max-width: 768px) {
+    max-width: 400px;
+    flex: 0 1 auto;
+    margin: 0 1rem;
+  }
+
+  @media screen and (max-width: 480px) {
+    // Hide search on very small screens, show search button instead
+    display: none;
+  }
+}
+
+// Mobile Search Toggle
+.mobile-search-toggle {
+  display: none;
+  width: 4rem;
+  height: 4rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--gray-medium-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    font-size: 1.6rem;
+  }
+
+  &:hover {
+    background-color: var(--blue-light-color);
+    color: white;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  // Show only on very small screens
+  @media screen and (max-width: 480px) {
+    display: flex;
+  }
+}
+
+// Mobile Search Overlay
+.mobile-search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--background-color);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  animation: slideInFromTop 0.3s ease;
+
+  @keyframes slideInFromTop {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
+
+.mobile-search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  border-bottom: 1px solid var(--border-color);
+
+  h3 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin: 0;
+  }
+}
+
+.mobile-search-close {
+  width: 4rem;
+  height: 4rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--gray-medium-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    font-size: 1.8rem;
+  }
+
+  &:hover {
+    background-color: var(--red-color);
+    color: white;
+    transform: scale(1.1);
+  }
+}
+
+.mobile-search-content {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
